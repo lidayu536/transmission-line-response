@@ -39,10 +39,20 @@ Homepage = "https://github.com/lidayu536/transmission-line-response"
 Repository = "https://github.com/lidayu536/transmission-line-response"
 Issues = "https://github.com/lidayu536/transmission-line-response/issues"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["transmission_line_response*"]
+[tool.setuptools]
+packages = [
+  "transmission_line_response",
+  "transmission_line_response.analysis",
+  "transmission_line_response.core",
+  "transmission_line_response.io",
+  "transmission_line_response.output",
+  "transmission_line_response.signals",
+  "transmission_line_response.sparams",
+]
+
+[tool.setuptools.package-dir]
+transmission_line_response = "src"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = [".."]

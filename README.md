@@ -60,7 +60,7 @@ python examples/analyze_single_s2p.py "D:\path\to\line.s2p" --roundtrip
 
 ## Package Layout
 
-The implementation is grouped by responsibility under `src/transmission_line_response/`:
+The implementation is grouped by responsibility under `src/`. `pyproject.toml` maps the Python package name `transmission_line_response` directly to `src/`, so there is no extra package-name directory under `src`.
 
 - `core/`: shared array typing and data containers.
 - `io/`: file readers split by source type, including Touchstone, MATLAB, and oscilloscope CSV.
@@ -68,7 +68,7 @@ The implementation is grouped by responsibility under `src/transmission_line_res
 - `analysis/`: high-level rise-edge, time-domain response, phase, and group-delay analysis.
 - `output/`: plotting and Markdown/CSV report writers.
 - `signals/`: waveform generation and measured waveform normalization utilities.
-- Top-level files such as `s21.py`, `phase.py`, and `time_domain.py` are compatibility facades that re-export the new subpackage APIs.
+- Top-level files inside `src/`, such as `s21.py`, `phase.py`, and `time_domain.py`, are compatibility facades that re-export the new subpackage APIs.
 
 Plotting functions are imported lazily at the package top level, so pure numerical workflows do not import `matplotlib` until a plot is actually requested.
 

@@ -1,15 +1,15 @@
 """Compatibility shim for local `_ComputingPackages` imports.
 
-The installable package source lives in `src/transmission_line_response`.  This
-small shim keeps existing local workflows working when the parent directory of
-this repository is placed on `PYTHONPATH`.
+The package source is mapped from `src/` in `pyproject.toml`. This shim keeps
+existing local workflows working when the parent directory of this repository is
+placed on `PYTHONPATH`.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
 
-_SOURCE_PACKAGE = Path(__file__).resolve().parent / "src" / "transmission_line_response"
+_SOURCE_PACKAGE = Path(__file__).resolve().parent / "src"
 if not _SOURCE_PACKAGE.exists():
     raise ImportError(f"Cannot find package source directory: {_SOURCE_PACKAGE}")
 

@@ -4,13 +4,14 @@ The repository is organized as an installable analysis package plus examples, do
 
 ```text
 transmission-line-response/
-|-- src/transmission_line_response/
+|-- src/
 |   |-- core/              # shared array helpers and data containers
 |   |-- io/                # Touchstone, MATLAB, scope CSV, and dispatch readers
 |   |-- sparams/           # S21 preprocessing, transforms, filtering, models, fitting
 |   |-- analysis/          # rise-edge/time-domain and phase/group-delay workflows
 |   |-- output/            # plotting and report writers
 |   |-- signals/           # waveform generation and waveform metrics
+|   |-- __init__.py        # package public API for transmission_line_response
 |   |-- cli.py             # command-line S2P analysis
 |   |-- s21.py             # compatibility facade
 |   |-- phase.py           # compatibility facade
@@ -18,9 +19,11 @@ transmission-line-response/
 |-- examples/              # runnable user examples
 |-- docs/                  # workflow and API documentation
 |-- tests/                 # synthetic-data unit tests
-|-- pyproject.toml         # build metadata and console scripts
+|-- pyproject.toml         # build metadata and package-dir mapping
 `-- README.md              # public entry point
 ```
+
+`pyproject.toml` maps the Python package name `transmission_line_response` directly to `src/`, so there is no extra `src/transmission_line_response/` nesting layer.
 
 ## Source Responsibilities
 
@@ -82,6 +85,6 @@ from transmission_line_response.time_domain import analyze_rise_from_s21
 
 - Keep measured raw datasets outside this package repository unless a tiny public sample is deliberately added.
 - Put generated figures, CSV files, and Markdown reports under `output/` or `analysis_output/`.
-- Put reusable implementation code in the functional subpackages under `src/transmission_line_response/`.
+- Put reusable implementation code in the functional modules under `src/`.
 - Keep one-off study scripts outside the package or under `examples/` only when they are general enough.
 - Add synthetic-data tests when changing numerical behavior or public API paths.

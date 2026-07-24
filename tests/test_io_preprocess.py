@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import sys
 from pathlib import Path
 
+PACKAGE_PARENT = Path(__file__).resolve().parents[2]
+if str(PACKAGE_PARENT) not in sys.path:
+    sys.path.insert(0, str(PACKAGE_PARENT))
 import numpy as np
 
 from transmission_line_response import PreprocessConfig, RawS21Data, prepare_s21, read_touchstone_2port
