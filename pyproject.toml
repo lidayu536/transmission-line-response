@@ -1,0 +1,27 @@
+﻿[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "signal-process"
+version = "0.1.0"
+description = "Signal processing utilities for superconducting microwave workflows."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "QuantumCoder" }
+]
+dependencies = [
+  "matplotlib",
+  "numpy",
+  "scipy",
+]
+
+[project.optional-dependencies]
+dev = []
+
+[tool.setuptools]
+packages = ["signal_process", "signal_process.examples"]
+
+[tool.setuptools.package-dir]
+signal_process = "."
