@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "signal-process"
+name = "transmission-line-response"
 version = "0.1.0"
-description = "Signal processing utilities for superconducting microwave workflows."
+description = "Transmission-line S-parameter response, rise-edge, phase, and group-delay analysis utilities for analog signal paths."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
@@ -21,7 +21,7 @@ dependencies = [
 dev = []
 
 [tool.setuptools]
-packages = ["signal_process", "signal_process.examples"]
+packages = ["transmission_line_response", "transmission_line_response.examples"]
 
 [tool.setuptools.package-dir]
-signal_process = "."
+transmission_line_response = "."

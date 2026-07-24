@@ -1,4 +1,4 @@
-﻿"""Signal processing utilities for superconducting microwave workflows."""
+"""Transmission-line response analysis utilities for analog signal paths."""
 
 from .generate_waveform import (
     ACZWave,

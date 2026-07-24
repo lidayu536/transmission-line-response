@@ -1,6 +1,12 @@
-﻿# signal_process
+# transmission-line-response
 
-`signal_process` 是一个面向超导量子计算实验数据的信号处理工具包。目前重点包括微波 S 参数到时域响应的恢复、上升沿指标分析、相位补偿与群时延分析，同时保留已有的常用波形生成函数。
+`transmission-line-response` 是一个面向模拟信号传输线和测量链路的传输特性分析工具包，Python 导入名为 `transmission_line_response`。目前重点包括 S 参数到时域响应的恢复、上升沿指标分析、相位补偿与群时延分析，同时保留已有的常用波形生成函数。
+
+## 名称约定
+
+- GitHub 仓库名 / Python 发布名：`transmission-line-response`
+- Python 导入名：`transmission_line_response`
+- 命名含义：强调“传输线/链路响应”这一通用问题，不绑定超导量子计算、微波实验或某一类器件。
 
 ## 功能
 
@@ -20,7 +26,7 @@
 ```python
 from pathlib import Path
 
-from signal_process import (
+from transmission_line_response import (
     IfftConfig,
     analyze_rise_from_s21,
     plot_rise_analysis,
@@ -44,10 +50,10 @@ write_rise_report("output/example/rise_report.md", response, figure_path=fig)
 命令行示例：
 
 ```powershell
-python -m signal_process.examples.analyze_single_s2p `
+python -m transmission_line_response.examples.analyze_single_s2p `
   "D:\AITools\Codex\workspace_0\MicrowaveProcess\S21_to_response\20260630_Z4.1\06.10.s2p" `
   --roundtrip `
-  --output-dir "output\signal_process_example"
+  --output-dir "output\transmission_line_response_example"
 ```
 
 ## S21 标准处理口径
@@ -55,7 +61,7 @@ python -m signal_process.examples.analyze_single_s2p `
 1. 读入数据后立刻提取 `freqs` 和复数 `S21`。
 2. 对相位先 `unwrap`，再进行补 0 频和插值。
 3. 若频率轴不满足 `freqs = df * arange(n)`，先补 `0 Hz` 锚点，默认 `phase0 = 0`。
-4. 对 `S21dB` 和解包相位分别插值到统一工作网格，默认 `0 ~ 5 GHz`、`5 MHz`。
+4. 对 `S21dB` 和解包相位分别插值到统一工作网格，默认 `0 ~ 5 GHz`、`5 MHz`，实际范围和间隔应根据原始数据自适应调整。
 5. 若测量是一来一回，用 `dB / 2` 和 `phase / 2` 构造单程等效。
 6. IFFT 参数需要根据数据特征选择，不把某一组旧参数当成固定模板。
 7. 报告里记录是否补 0、0 频幅度估计方式、是否折半、频率网格、相位拟合窗口、群时延可信区间和延拓参数。
