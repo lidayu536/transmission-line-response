@@ -1,46 +1,74 @@
 """Transmission-line response analysis utilities for analog signal paths."""
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
-from .generate_waveform import (
-    ACZWave,
-    CosEnv,
-    Differential,
-    FlattopWave,
-    gen_alpha_drag,
-    show_spectrum,
-    theta_sl,
+from .analysis import (
+    IfftConfig,
+    IfftParameterChoice,
+    PhaseAnalysisConfig,
+    PhaseGroupDelayResult,
+    RiseMetrics,
+    TimeDomainResponse,
+    analyze_phase_group_delay,
+    analyze_rise_from_s21,
+    choose_ifft_parameters,
+    compensate_linear_phase,
+    first_level_crossing,
+    fit_linear_phase,
+    recover_time_domain_response,
+    select_trusted_group_delay_band,
 )
+from .core import PreparedS21, RawS21Data
 from .io import (
     ScopeTrace,
     Touchstone2Port,
+    read_mat_s21,
     read_s21,
     read_s2p,
     read_scope_csv,
     read_touchstone_2port,
     subtract_scope_background,
 )
-from .phase import (
-    PhaseAnalysisConfig,
-    PhaseGroupDelayResult,
-    analyze_phase_group_delay,
-    compensate_linear_phase,
-    fit_linear_phase,
-    select_trusted_group_delay_band,
+from .output.reports import write_phase_group_delay_report, write_rise_report, write_time_domain_csv
+
+
+def plot_phase_group_delay(*args, **kwargs):
+    from .output.plots import plot_phase_group_delay as _plot_phase_group_delay
+
+    return _plot_phase_group_delay(*args, **kwargs)
+
+
+def plot_rise_analysis(*args, **kwargs):
+    from .output.plots import plot_rise_analysis as _plot_rise_analysis
+
+    return _plot_rise_analysis(*args, **kwargs)
+
+
+def plot_rise_comparison(*args, **kwargs):
+    from .output.plots import plot_rise_comparison as _plot_rise_comparison
+
+    return _plot_rise_comparison(*args, **kwargs)
+from .signals import (
+    ACZWave,
+    CosEnv,
+    Differential,
+    FlattopWave,
+    NormalizedStepTrace,
+    find_step_edge_index,
+    gen_alpha_drag,
+    level_crossing_time,
+    measure_rise_time,
+    normalize_step_trace,
+    show_spectrum,
+    theta_sl,
 )
-from .plots import plot_phase_group_delay, plot_rise_analysis, plot_rise_comparison
-from .preprocess import (
+from .sparams import (
     PreprocessConfig,
-    add_dc_anchor,
-    check_fft_ready_grid,
-    prepare_s21,
-    repo_roundtrip_s2p_config,
-)
-from .reports import write_phase_group_delay_report, write_rise_report, write_time_domain_csv
-from .s21 import (
     S21BandwidthWindow,
     SimpleMultiexpFitResult,
+    add_dc_anchor,
     calibrate_s21_by_simple_multiexp,
+    check_fft_ready_grid,
     estimate_delay_from_phase,
     filter_by_S21,
     filter_waveform_by_s21,
@@ -52,36 +80,20 @@ from .s21 import (
     oscillatory_multiexp_impulse_response,
     oscillatory_multiexp_s21,
     prefix_sum,
+    prepare_s21,
     reponse_simple_multiexp,
-    select_usable_s21_band,
+    repo_roundtrip_s2p_config,
     s21_simple_multiexp,
     s21_to_impulse_response,
+    select_usable_s21_band,
     simple_multiexp_impulse_response,
     simple_multiexp_s21,
     simple_multiexp_step_response,
     standing_wave_s21,
 )
-from .time_domain import (
-    IfftConfig,
-    IfftParameterChoice,
-    RiseMetrics,
-    TimeDomainResponse,
-    analyze_rise_from_s21,
-    choose_ifft_parameters,
-    first_level_crossing,
-    recover_time_domain_response,
-)
-from .types import PreparedS21, RawS21Data
-from .waveforms import (
-    NormalizedStepTrace,
-    find_step_edge_index,
-    level_crossing_time,
-    measure_rise_time,
-    normalize_step_trace,
-)
 
 __all__ = [
-    '__version__',
+    "__version__",
     "ACZWave",
     "CosEnv",
     "Differential",
@@ -129,6 +141,7 @@ __all__ = [
     "plot_rise_comparison",
     "prefix_sum",
     "prepare_s21",
+    "read_mat_s21",
     "read_s21",
     "read_s2p",
     "read_scope_csv",
@@ -136,10 +149,10 @@ __all__ = [
     "recover_time_domain_response",
     "reponse_simple_multiexp",
     "repo_roundtrip_s2p_config",
-    "select_trusted_group_delay_band",
-    "select_usable_s21_band",
     "s21_simple_multiexp",
     "s21_to_impulse_response",
+    "select_trusted_group_delay_band",
+    "select_usable_s21_band",
     "show_spectrum",
     "simple_multiexp_impulse_response",
     "simple_multiexp_s21",

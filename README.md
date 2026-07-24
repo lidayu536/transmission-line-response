@@ -1,6 +1,6 @@
 # transmission-line-response
 
-`transmission-line-response` analyzes analog transmission-line and measurement-chain transfer characteristics from S-parameter data.  The Python import name is `transmission_line_response`.
+`transmission-line-response` analyzes analog transmission-line and measurement-chain transfer characteristics from S-parameter data. The Python import name is `transmission_line_response`.
 
 The current focus is S21 preprocessing, single-pass equivalent construction, impulse/step response recovery, rise-edge metrics, phase compensation, group-delay analysis, and report-ready figures/tables.
 
@@ -58,15 +58,19 @@ or, directly from a source checkout:
 python examples/analyze_single_s2p.py "D:\path\to\line.s2p" --roundtrip
 ```
 
-## Feature Areas
+## Package Layout
 
-- `io.py`: read Touchstone `.s2p`, MATLAB `.mat`, and oscilloscope CSV data.
-- `preprocess.py`: put S21 on a zero-start uniform grid, add a DC anchor, interpolate dB and unwrapped phase, and construct single-pass equivalents.
-- `time_domain.py`: choose IFFT parameters, recover impulse/step responses, normalize steps, and measure rise-edge metrics.
-- `phase.py`: fit linear phase, compensate bulk delay, select a trusted low-frequency group-delay band, and compute GD statistics.
-- `s21.py`: lower-level S21 math, IFFT conversion, filtering, multiexponential models, and fitting helpers.
-- `plots.py` and `reports.py`: generate report-ready PNG, CSV, and Markdown outputs.
-- `generate_waveform.py` and `waveforms.py`: waveform generation and measured waveform rise-edge utilities.
+The implementation is grouped by responsibility under `src/transmission_line_response/`:
+
+- `core/`: shared array typing and data containers.
+- `io/`: file readers split by source type, including Touchstone, MATLAB, and oscilloscope CSV.
+- `sparams/`: S-parameter preprocessing, frequency-to-time transforms, filtering, bandwidth selection, and analytical S21 models.
+- `analysis/`: high-level rise-edge, time-domain response, phase, and group-delay analysis.
+- `output/`: plotting and Markdown/CSV report writers.
+- `signals/`: waveform generation and measured waveform normalization utilities.
+- Top-level files such as `s21.py`, `phase.py`, and `time_domain.py` are compatibility facades that re-export the new subpackage APIs.
+
+Plotting functions are imported lazily at the package top level, so pure numerical workflows do not import `matplotlib` until a plot is actually requested.
 
 ## Documentation
 
@@ -77,7 +81,7 @@ python examples/analyze_single_s2p.py "D:\path\to\line.s2p" --roundtrip
 
 ## Output Convention
 
-Generated analysis artifacts should live outside the package source, usually under an `output/` or `analysis_output/` directory.  The repository `.gitignore` excludes these generated folders by default.
+Generated analysis artifacts should live outside the package source, usually under an `output/` or `analysis_output/` directory. The repository `.gitignore` excludes these generated folders by default.
 
 A complete S21 analysis usually produces:
 
