@@ -11,6 +11,15 @@ requires-python = ">=3.10"
 authors = [
   { name = "QuantumCoder" }
 ]
+keywords = ["S-parameters", "S21", "transmission-line", "impulse-response", "group-delay", "rise-time"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering",
+]
 dependencies = [
   "matplotlib",
   "numpy",
@@ -18,10 +27,22 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = []
+dev = [
+  "pytest>=7",
+]
 
-[tool.setuptools]
-packages = ["transmission_line_response", "transmission_line_response.examples"]
+[project.scripts]
+tlr-analyze-s2p = "transmission_line_response.cli:main"
 
-[tool.setuptools.package-dir]
-transmission_line_response = "."
+[project.urls]
+Homepage = "https://github.com/lidayu536/transmission-line-response"
+Repository = "https://github.com/lidayu536/transmission-line-response"
+Issues = "https://github.com/lidayu536/transmission-line-response/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["transmission_line_response*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
