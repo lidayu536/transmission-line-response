@@ -4,6 +4,8 @@
 
 The current focus is S21 preprocessing, single-pass equivalent construction, impulse/step response recovery, rise-edge metrics, phase compensation, group-delay analysis, and report-ready figures/tables.
 
+The package also provides bounded ripple-correction FIR design. A low-rate prototype can be designed from a trusted S21 band, interpolated in time to a higher output rate, and refined against the measured band without inventing unknown high-frequency S21.
+
 ## Installation
 
 For local development from this repository:
@@ -20,6 +22,8 @@ sys.path.insert(0, r"D:\PostGraduate\SuperconductingQuantumComputing\_ComputingP
 
 from transmission_line_response import analyze_rise_from_s21
 ```
+
+For a trusted low-frequency S21 band, use `design_fir_sequence_from_s21` when only the final FIR sequence is needed. It automatically chooses a prototype sample rate of at least twice the trusted-band edge, performs time-domain interpolation, and returns the FIR at the requested output sample rate. Use `design_interpolated_ripple_correction_fir` instead when prototype, interpolation, target, or diagnostic metadata are also needed.
 
 ## Quick Start
 

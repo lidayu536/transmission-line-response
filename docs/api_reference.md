@@ -34,6 +34,14 @@ Implementation path: `transmission_line_response.sparams`
 - `group_delay_from_s21(s21, freqs)`: compute group delay from the unwrapped phase derivative.
 - `filter_waveform_by_s21(...)`: apply S21 to a waveform.
 - `select_usable_s21_band(...)`: truncate/taper a noisy high-frequency tail.
+- `build_ripple_correction_target(...)`: construct a bounded correction target from a smooth magnitude baseline and linear-phase residual.
+- `design_real_fir_from_response(...)`: fit a real causal FIR to a complex positive-frequency target.
+- `interpolate_fir_time_domain(...)`: interpolate a causal prototype impulse response onto a finer time grid.
+- `design_fir_sequence_from_s21(...)`: design the complete FIR workflow from prepared S21 and return only the final coefficient sequence at the requested output sample rate.
+- `design_interpolated_ripple_correction_fir(...)`: design a low-rate prototype, interpolate it, and refine the final-rate FIR against the trusted band.
+- `FIRCorrectionDesign`, `RippleCorrectionTarget`: FIR-design result containers.
+
+The high-level FIR wrapper assumes that S21 has already been prepared on a uniformly spaced grid starting at `0 Hz`. It uses a prototype rate of `2 * correction_band_hz` by default, so the trusted band is not folded by the prototype Nyquist limit, then interpolates and refines the FIR at the requested output sample rate.
 
 ## Analytical Models and Fitting
 

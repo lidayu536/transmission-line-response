@@ -1,5 +1,15 @@
 from .band import S21BandwidthWindow, select_usable_s21_band
 from .filtering import filter_by_S21, filter_waveform_by_s21
+from .fir import (
+    FIRCorrectionDesign,
+    RippleCorrectionTarget,
+    build_ripple_correction_target,
+    design_fir_sequence_from_s21,
+    design_interpolated_ripple_correction_fir,
+    design_real_fir_from_response,
+    frequency_response,
+    interpolate_fir_time_domain,
+)
 from .fitting import (
     SimpleMultiexpFitResult,
     calibrate_s21_by_simple_multiexp,
@@ -34,6 +44,8 @@ from .transforms import (
 
 __all__ = [
     "PreprocessConfig",
+    "FIRCorrectionDesign",
+    "RippleCorrectionTarget",
     "S21BandwidthWindow",
     "SimpleMultiexpFitResult",
     "add_dc_anchor",
@@ -42,11 +54,17 @@ __all__ = [
     "estimate_delay_from_phase",
     "filter_by_S21",
     "filter_waveform_by_s21",
+    "build_ripple_correction_target",
+    "design_fir_sequence_from_s21",
+    "design_interpolated_ripple_correction_fir",
+    "design_real_fir_from_response",
     "find_step_response_care_points",
     "fit_s21_with_simple_multiexp",
     "fit_simple_multiexp",
+    "frequency_response",
     "group_delay_from_s21",
     "impulse_to_step_response",
+    "interpolate_fir_time_domain",
     "oscillatory_multiexp_impulse_response",
     "oscillatory_multiexp_s21",
     "prefix_sum",
